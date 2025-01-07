@@ -233,8 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHitGrass: {fileID: 900253669}
   mouseMove: {fileID: 900253668}
-  forwardMoveDistance: 1
   playerTransform: {fileID: 900253667}
+  grassGenerator: {fileID: 948426337}
 --- !u!1 &619180689
 GameObject:
   m_ObjectHideFlags: 0
