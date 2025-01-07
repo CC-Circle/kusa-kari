@@ -10,7 +10,7 @@ public class CylinderGridGenerator : MonoBehaviour
     [SerializeField]
     private GameObject kusaStart; // シリアライズフィールドとして宣言
 
-    void Start()
+    void Awake()
     {
         if (kusaStart != null)
         {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private (int, int)[,] kusaGrid = new (int, int)[50, 5]; // 縦50、横5のタプル型配列
+    private (int, int)[,] kusaGrid = new (int, int)[100, 5]; // 縦50、横5のタプル型配列
     private (int, int)[] zColumn = new (int, int)[5]; // z0x0〜z0x4 を格納する配列
     private CameraMove cameraMove;
     private int currentZIndex = 0; // 現在処理中のz列
