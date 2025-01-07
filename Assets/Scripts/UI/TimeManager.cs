@@ -5,8 +5,13 @@ public class TimeManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI timerText; // 残り時間を表示するTextMeshProUGUI
-    private float totalTime = 10f; // 60秒のタイマー
+    private float totalTime = 7.0f; // 60秒のタイマー
     private string formattedTime;
+
+    [SerializeField]
+    private GameObject managersObject; // Managersオブジェクト
+    [SerializeField]
+    private GameObject finishObject; // Finishオブジェクト
 
     void Awake()
     {
@@ -27,6 +32,23 @@ public class TimeManager : MonoBehaviour
             if (totalTime <= 0)
             {
                 totalTime = 0;
+
+                // Managersオブジェクトの中身のスクリプトを無効化
+                if (managersObject != null)
+                {
+                    MonoBehaviour[] managerScripts = managersObject.GetComponentsInChildren<MonoBehaviour>();
+                    foreach (var script in managerScripts)
+                    {
+                        script.enabled = false; // スクリプトを無効化
+                    }
+                }
+
+                // Finishオブジェクトを有効化
+                if (finishObject != null)
+                {
+                    finishObject.SetActive(true); // Finishオブジェクトを有効化
+                }
+
                 // ゲーム終了処理などを追加できます
             }
 
