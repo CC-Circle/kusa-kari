@@ -15,9 +15,6 @@ public class SerialHandler : MonoBehaviour
 
     private SerialPort serialPort; // シリアルポートのインスタンス
 
-    //M5Stackgaつながっているかのフラグ
-    public bool Settingsflag;
-
     // MonoBehaviourのAwakeメソッドはオブジェクトの初期化時に呼ばれます
     private void Awake()
     {
@@ -86,12 +83,10 @@ public class SerialHandler : MonoBehaviour
             {
                 string message = serialPort.ReadLine(); // データを一行読み取る
                 OnDataReceived?.Invoke(message); // データ受信イベントを発火
-                Settingsflag = true;//つながっている
             }
             catch (System.Exception e)
             {
                 Debug.LogWarning("Error reading from serial port: " + e.Message); // エラーメッセージを表示
-                Settingsflag = false;//つながっていないのでマウスに切り替え
             }
         }
     }
