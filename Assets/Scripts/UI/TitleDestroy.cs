@@ -5,6 +5,23 @@ public class TitleDestroy : MonoBehaviour
     [SerializeField]
     private GameObject startCountObject; // StartCountスクリプトがアタッチされたオブジェクト
 
+    private GameObject managersObject;
+
+    void Awake()
+    {
+        // Managersオブジェクトを探してその子のスクリプトを無効化
+        managersObject = GameObject.Find("Managers");
+
+        if (managersObject != null)
+        {
+            MonoBehaviour[] managerScripts = managersObject.GetComponentsInChildren<MonoBehaviour>();
+            foreach (var script in managerScripts)
+            {
+                script.enabled = false; // スクリプトを無効化
+            }
+        }
+    }
+
     void Update()
     {
         // スペースキーが押された場合に処理を実行

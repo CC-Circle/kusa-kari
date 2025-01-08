@@ -38,14 +38,14 @@ public class GameManager : MonoBehaviour
 
         if (IsZColumnAllZero())
         {
-            Debug.Log($"All elements in z{zColumn[0].Item1}x{zColumn[0].Item2} column are zero.");
+            //Debug.Log($"All elements in z{zColumn[0].Item1}x{zColumn[0].Item2} column are zero.");
             cameraMove?.MoveForward();  // カメラを前進させる
 
             if (currentZIndex < 99)
             {
                 currentZIndex++;
                 InitializeZColumn(currentZIndex);
-                Debug.Log($"Moving to the next column: z{currentZIndex}.");
+                //Debug.Log($"Moving to the next column: z{currentZIndex}.");
             }
         }
     }
@@ -89,13 +89,22 @@ public class GameManager : MonoBehaviour
             {
                 if (kusaGrid[z, x] == signal)
                 {
-                    // Debug.Log($"z{z}x{x}");
-                    // オブジェクト名に基づいて該当するオブジェクトを削除
+                    // オブジェクト名に基づいて該当するオブジェクトを取得
                     GameObject objToDelete = GameObject.Find($"z{z}x{x}");
                     if (objToDelete != null)
                     {
-                        Destroy(objToDelete); // オブジェクトを削除
-                        // Debug.Log($"Object {objToDelete.name} deleted.");
+                        // thisDestroyスクリプトを取得
+                        thisDestroy destroyScript = objToDelete.GetComponent<thisDestroy>();
+                        
+                        if (destroyScript != null)
+                        {
+                            // thisDestroyのメソッドを呼び出してオブジェクトを削除し、スコアを追加
+                            destroyScript.DestroyObjectAndAddScore();
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"No thisDestroy script found on {objToDelete.name}");
+                        }
                     }
 
                     // 該当する配列の要素を 0 に設定
