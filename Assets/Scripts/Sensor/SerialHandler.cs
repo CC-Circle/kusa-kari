@@ -10,7 +10,7 @@ public class SerialHandler : MonoBehaviour
 
     // シリアルポート名
     // ls /dev/tty* | grep usb
-    [SerializeField] private string portName = "/dev/cu.wchusbserial55910045011";
+    [SerializeField] private string port_01 = "/dev/tty.usbserial-575C0331181";
     public int baudRate = 115200; // ボーレート（通信速度）
 
     private SerialPort serialPort; // シリアルポートのインスタンス
@@ -30,12 +30,18 @@ public class SerialHandler : MonoBehaviour
         Close(); // シリアルポートを閉じる
     }
 
+    // シリアルポートが開いているか確認するプロパティ
+    public bool IsOpen
+    {
+        get { return serialPort != null && serialPort.IsOpen; }
+    }
+
     // シリアルポートを開くメソッド
     private void Open()
     {
         try
         {
-            serialPort = new SerialPort(portName, baudRate); // シリアルポートを初期化
+            serialPort = new SerialPort(port_01, baudRate); // シリアルポートを初期化
             serialPort.Open(); // シリアルポートを開く
             serialPort.DiscardInBuffer(); // 受信バッファをクリア
             serialPort.DiscardOutBuffer(); // 送信バッファをクリア
