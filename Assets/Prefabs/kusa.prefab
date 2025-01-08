@@ -121,4 +121,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreToAdd: 100
-  scoreManager: {fileID: 0}
+  catkusaPrefab: {fileID: 7617497139787998429, guid: 61402984d0c8548f89dd101c91988903, type: 3}

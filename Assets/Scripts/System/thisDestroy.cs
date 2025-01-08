@@ -4,6 +4,7 @@ public class thisDestroy : MonoBehaviour
 {
     public int scoreToAdd = 100;  // 加算するスコア
     private ScoreCount scoreManager;  // ScoreCountスクリプトを参照するための変数
+    public GameObject catkusaPrefab;  // catkusaプレハブをInspectorから設定するための変数
 
     // ゲームが開始された時にScoreManagerを自動で設定
     void Start()
@@ -21,6 +22,13 @@ public class thisDestroy : MonoBehaviour
     // オブジェクトを破壊し、スコアを追加するメソッド
     public void DestroyObjectAndAddScore()
     {
+        // catkusaプレハブを自分の位置に生成
+        if (catkusaPrefab != null)
+        {
+            Instantiate(catkusaPrefab, transform.position, Quaternion.identity);  // プレハブを生成
+        }
+
+        // スコアの加算
         if (scoreManager != null)
         {
             scoreManager.AddScore(scoreToAdd);  // スコアを加算
