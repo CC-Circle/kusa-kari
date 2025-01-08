@@ -6,58 +6,68 @@ public class SerialReceive : MonoBehaviour
 {
     public SerialHandler serialHandler;
 
-    public int Flag_view = 0;
-    public int Flag_button = 0;
-    public int left_count = 0;
-    public int right_count = 0;
+    public bool vibrationFlag = false;
 
     void Start()
     {
         serialHandler.OnDataReceived += OnDataReceived;
     }
 
+    void Update()
+    {
+        // SerialPort が開いていない場合のチェック
+        if (!serialHandler.IsOpen)
+        {
+            Debug.LogWarning("Serial port is not open.");
+        }
+
+        // Mキーで振動フラグを切り替える
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (vibrationFlag)
+            {
+                vibrationFlag = false;
+            }
+            else
+            {
+                vibrationFlag = true;
+            }
+        }
+
+        // Debug
+        Debug.Log(vibrationFlag);
+    }
+
     // Arduinoから受信したデータを処理する
     void OnDataReceived(string message)
     {
-        // 受信したデータをデバッグログに表示
-        // Debug.Log($"Received data: {message}");
-        // Debug.Log($"Flag_view: {Flag_view}");
-        // Debug.Log($"left_count: {left_count}");
-        // Debug.Log($"right_count: {right_count}");
         try
         {
-            // 受信したデータをint型に変換
-            int flag = int.Parse(message);
-
-            if (flag == 1) // 左回転のフラグ
+            if (message.StartsWith("{") && message.Contains("\"vibration\":true"))
             {
-                left_count++;
-                if (left_count > 5)
+                if (vibrationFlag)
                 {
-                    Flag_view = 1;
-                    left_count = 0;
+                    vibrationFlag = false;
+                }
+                else
+                {
+                    vibrationFlag = true;
                 }
             }
-            else if (flag == 2) // 右回転のフラグ
+            else
             {
-                right_count++;
-                if (right_count > 5)
+                string[] values = message.Split(',');
+                if (values.Length == 3)
                 {
-                    Flag_view = 2;
-                    right_count = 0;
+                    float accX = float.Parse(values[0]);
+                    float accY = float.Parse(values[1]);
+                    float accZ = float.Parse(values[2]);
+                    Debug.Log($"Acceleration Data: X={accX}, Y={accY}, Z={accZ}");
                 }
-            }
-            else if (flag == 0) // 停止のフラグ
-            {
-                Flag_view = 0;
-            }
-            else if (flag == 10)
-            {
-                Flag_button = 1;
-            }
-            else if (flag == -1)
-            {
-                Flag_button = 0;
+                else
+                {
+                    Debug.LogWarning($"Unexpected data format: {message}");
+                }
             }
         }
         catch (System.Exception e)
