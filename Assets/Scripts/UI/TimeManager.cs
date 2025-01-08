@@ -1,11 +1,14 @@
 using UnityEngine;
 using TMPro; // TextMeshProを使うために追加
+using System.IO; // ファイル操作のために追加
+using UnityEngine.SceneManagement; // シーン管理のために追加
+using System.Collections; // コルーチンを使うために追加
 
 public class TimeManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI timerText; // 残り時間を表示するTextMeshProUGUI
-    private float totalTime = 60.0f; // 60秒のタイマー
+    private float totalTime = 5.0f; // 60秒のタイマー
     private string formattedTime;
 
     [SerializeField]
@@ -13,8 +16,13 @@ public class TimeManager : MonoBehaviour
     [SerializeField]
     private GameObject finishObject; // Finishオブジェクト
 
+    private ScoreCount scoreCount; // ScoreCountの参照
+
     void Awake()
     {
+        // ScoreCountコンポーネントを取得
+        scoreCount = FindObjectOfType<ScoreCount>();
+
         // 最初はスクリプト自体を無効化
         this.enabled = false; // TimeManagerスクリプトを無効化
     }
@@ -49,7 +57,8 @@ public class TimeManager : MonoBehaviour
                     finishObject.SetActive(true); // Finishオブジェクトを有効化
                 }
 
-                // ゲーム終了処理などを追加できます
+                // スコアを書き込み処理を呼び出し
+                SaveScoreToCSV();
             }
 
             // 残り時間を秒とミリ秒でフォーマットして表示
@@ -71,5 +80,37 @@ public class TimeManager : MonoBehaviour
         int milliseconds = Mathf.FloorToInt((time - seconds) * 1000); // ミリ秒を計算
 
         return string.Format("{0:00}:{1:000}", seconds, milliseconds); // 秒:ミリ秒形式で表示
+    }
+
+    // スコアをCSVファイルに保存し、3秒後にシーンを移動
+    private void SaveScoreToCSV()
+    {
+        if (scoreCount != null)
+        {
+            string path = Path.Combine(Application.dataPath, "Scores.csv");
+            int currentScore = scoreCount.score; // ScoreCountからスコアを取得
+
+            // CSVファイルに書き込み
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                writer.WriteLine("Score," + currentScore);
+            }
+
+            Debug.Log("スコア: " + currentScore);
+
+            // 3秒後にシーンを移動するコルーチンを開始
+            StartCoroutine(WaitAndLoadScene());
+        }
+        else
+        {
+            Debug.LogError("ScoreCountが見つかりませんでした。");
+        }
+    }
+
+    // 3秒待機してからシーンを移動するコルーチン
+    private IEnumerator WaitAndLoadScene()
+    {
+        yield return new WaitForSeconds(3); // 3秒待機
+        SceneManager.LoadScene("rank"); // rankシーンに移動
     }
 }
