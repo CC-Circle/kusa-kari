@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8705476973841727650}
   - component: {fileID: 4213404328270983982}
   - component: {fileID: 4723805819947889694}
+  - component: {fileID: -298704642124188495}
   m_Layer: 0
   m_Name: grass_effect
   m_TagString: Untagged
@@ -4831,3 +4832,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-298704642124188495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8659326982220963133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a207a2a207a44858f3c84834117075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1

@@ -132,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4829700}
-  - component: {fileID: 4829699}
   - component: {fileID: 4829698}
   - component: {fileID: 4829701}
+  - component: {fileID: 4829702}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -149,28 +149,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4829696}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6e67155b307e4ed4b1e44da80425fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4829699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4829696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e43259a3e764b16bb4e059c00f9680, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cylinderPrefab: {fileID: 6259090621428453892, guid: d2fbcbcf6b8994a25bfaf64c2b50ba3d, type: 3}
-  rows: 100
-  columns: 5
-  spacing: 1.25
-  kusaStart: {fileID: 0}
 --- !u!4 &4829700
 Transform:
   m_ObjectHideFlags: 0
@@ -199,6 +182,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5700f7c8533473eb2e1d0deaf4a5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4829702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eadcfb0f988844cbda56deb1f4b3a22b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catkusaPrefab: {fileID: 7617497139787998429, guid: 61402984d0c8548f89dd101c91988903, type: 3}
+  instansPoint: {fileID: 1524567467}
+  spawnInterval: 0.5
 --- !u!1001 &93330548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1664,6 +1662,7 @@ GameObject:
   - component: {fileID: 1165304622}
   - component: {fileID: 1165304621}
   - component: {fileID: 1165304620}
+  - component: {fileID: 1165304623}
   m_Layer: 0
   m_Name: zimen
   m_TagString: Untagged
@@ -1758,6 +1757,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165304618}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1165304623
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165304618}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1220085604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2354,6 +2374,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af900810b17014d7888d9d0c415fea09, type: 3}
   m_PrefabInstance: {fileID: 1503122513}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1524567467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524567468}
+  m_Layer: 0
+  m_Name: instansPojnt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1524567468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524567467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 16.46, z: -7.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1527658389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3542,3 +3593,4 @@ SceneRoots:
   - {fileID: 1300172197}
   - {fileID: 4829700}
   - {fileID: 1247062480}
+  - {fileID: 1524567468}

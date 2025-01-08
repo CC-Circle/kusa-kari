@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         cameraMove = Camera.main.GetComponent<CameraMove>();
         if (cameraMove == null)
         {
-            Debug.LogError("CameraMove script not found on the Main Camera.");
+            //Debug.LogError("CameraMove script not found on the Main Camera.");
         }
     }
 
