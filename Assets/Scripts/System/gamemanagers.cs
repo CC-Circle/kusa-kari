@@ -2,139 +2,188 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private (int, int)[,] kusaGrid = new (int, int)[100, 5]; // 縦50、横5のタプル型配列
-    private (int, int)[] zColumn = new (int, int)[5]; // z0x0〜z0x4 を格納する配列
+    // KusaGridGeneratorから取得するための2次元配列
+    private (int, int)[,] kusaGrid;
+
+    // 現在のZ軸列を格納する配列
+    private int[] zColumn = new int[5];
+    // 現在のZ軸HP配列を格納する配列
+    private int[] HPColumn = new int[5];
+
+
+    // 各位置の草のHPを格納する2次元配列
+    private int[,] kusaHP = new int[100, 5];
+    // カメラを動かすためのスクリプト参照
     private CameraMove cameraMove;
-    private int currentZIndex = 0; // 現在処理中のz列
-    private bool isWaitingForMove = false; // 移動完了を待機するフラグ
+    // 現在のZ軸インデックス
+    private int currentZIndex = 0;
+    // KusaGridGeneratorの参照
+    private KusaGridGenerator kusaGridGenerator;
+    // 移動待機状態のフラグ（現在未使用）
+    private bool isWaitingForMove = false;
 
     void Start()
     {
-        InitializeKusaGrid();
+        kusaGridGenerator = FindObjectOfType<KusaGridGenerator>();
+
+        if (kusaGridGenerator != null)
+        {
+            kusaGrid = kusaGridGenerator.kusaGrid; // kusaGridの初期化
+            kusaHP = kusaGridGenerator.kusaHP; // kusaHPの参照を取得
+        }
+        else
+        {
+            Debug.LogError("KusaGridGenerator not found.");
+        }
+
         InitializeZColumn(currentZIndex);
-        PrintKusaGrid();
 
         cameraMove = Camera.main.GetComponent<CameraMove>();
         if (cameraMove == null)
         {
-            //Debug.LogError("CameraMove script not found on the Main Camera.");
+            Debug.LogError("CameraMove script not found on the Main Camera.");
+        }
+
+        
+
+        LogKusaHP();
+
+
+        // 現在のZインデックスに基づいてzColumnを初期化
+        InitializeZColumn(currentZIndex);
+
+        // CameraMoveスクリプトの参照を取得
+        cameraMove = Camera.main.GetComponent<CameraMove>();
+        if (cameraMove == null)
+        {
+            Debug.LogError("CameraMove script not found on the Main Camera.");
         }
     }
 
     void Update()
     {
-        // カメラの移動中は処理を中断
+        // カメラが移動中であれば、処理をスキップ
         if (cameraMove != null && cameraMove.IsMoving)
         {
-            return; // カメラが移動している間、処理を中断
+            return;
         }
 
-        // キー入力による信号処理
+        ///***柴田用
+        ///***この下がシグナルを送信してる部分です。
+        
+        // キー入力に応じてzColumnの信号を処理
         if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
         if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
         if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(zColumn[2]);
         if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
         if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
 
+        ///***とりあえずこの中で[1]と[3]をセンサーに変えてみて欲しい
+        ///***プログラムがクチャクチャだから今回は延命で
+        ///***あと出来そうならBGMとSE適当でいいからぶち込んで
+        
+        // zColumnが全てゼロなら、カメラを進めて次のZインデックスを設定
         if (IsZColumnAllZero())
         {
-            //Debug.Log($"All elements in z{zColumn[0].Item1}x{zColumn[0].Item2} column are zero.");
-            cameraMove?.MoveForward();  // カメラを前進させる
+            cameraMove?.MoveForward();
 
-            if (currentZIndex < 99)
+            if (currentZIndex < kusaGrid.GetLength(0) - 1)
             {
                 currentZIndex++;
-                InitializeZColumn(currentZIndex);
-                //Debug.Log($"Moving to the next column: z{currentZIndex}.");
+                InitializeZColumn(currentZIndex); // 次のzColumnを初期化
             }
         }
     }
 
-    void InitializeKusaGrid()
-    {
-        for (int z = 0; z < kusaGrid.GetLength(0); z++)
-        {
-            for (int x = 0; x < kusaGrid.GetLength(1); x++)
-            {
-                kusaGrid[z, x] = (z, x); // タプルとして配列に格納
-            }
-        }
-    }
-
+    // 指定されたZインデックスに基づいてzColumnを初期化
     void InitializeZColumn(int zIndex)
     {
         for (int x = 0; x < 5; x++)
         {
-            zColumn[x] = (zIndex, x); // z0x0〜z0x4 を格納
+            zColumn[x] = kusaGrid[zIndex, x].Item2; // kusaGridから対応する値を取得
+            HPColumn[x] = kusaHP[zIndex,x]; // kusaHPから取得
         }
     }
 
-    void PrintKusaGrid()
+    // zColumnの信号を受け取り、対応するオブジェクトを破壊してスコアを加算
+    // Signalの処理
+    void ReceiveSignal(int signal)
     {
-        for (int z = 0; z < kusaGrid.GetLength(0); z++)
+        if (kusaGrid == null)
         {
-            for (int x = 0; x < kusaGrid.GetLength(1); x++)
-            {
-                //Debug.Log($"z{z}x{x}: ({kusaGrid[z, x].Item1}, {kusaGrid[z, x].Item2})"); // タプルの内容をデバッグ出力
-            }
+            Debug.LogError("kusaGrid is not initialized.");
+            return;
         }
-    }
 
-    void ReceiveSignal((int, int) signal)
-    {
-        // 信号を解析して該当する位置の配列を 0 に変更
-        for (int z = 0; z < kusaGrid.GetLength(0); z++)
+        if (kusaHP == null)
         {
-            for (int x = 0; x < kusaGrid.GetLength(1); x++)
-            {
-                if (kusaGrid[z, x] == signal)
+            Debug.LogError("kusaHP is not initialized.");
+            return;
+        }
+
+        if (zColumn[signal] == signal)
+        {
+            GameObject objToDelete = GameObject.Find($"z{currentZIndex}x{signal}");
+            if (objToDelete != null)
+            {   
+                //Debug.Log("tuuka");
+                thisDestroy destroyScript = objToDelete.GetComponent<thisDestroy>();
+
+                if (destroyScript != null)
                 {
-                    // オブジェクト名に基づいて該当するオブジェクトを取得
-                    GameObject objToDelete = GameObject.Find($"z{z}x{x}");
-                    if (objToDelete != null)
-                    {
-                        // thisDestroyスクリプトを取得
-                        thisDestroy destroyScript = objToDelete.GetComponent<thisDestroy>();
-                        
-                        if (destroyScript != null)
-                        {
-                            // thisDestroyのメソッドを呼び出してオブジェクトを削除し、スコアを追加
-                            destroyScript.DestroyObjectAndAddScore();
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"No thisDestroy script found on {objToDelete.name}");
-                        }
-                    }
-
-                    // 該当する配列の要素を 0 に設定
-                    kusaGrid[z, x] = (0, 0); // (0,0) タプルを設定
+                    destroyScript.DestroyObjectAndAddScore();
                     
-                    // Debug.Log($"Signal received: ({signal.Item1}, {signal.Item2}). Updated kusaGrid[{z}, {x}] to (0, 0).");
-                    return;
+                }
+                else
+                {
+                    Debug.LogWarning($"No thisDestroy script found on {objToDelete.name}");
                 }
             }
+            else
+            {
+                Debug.Log($"Object z{currentZIndex}x{signal} not found.");
+            }
+
+            if(HPColumn[signal]  > 0)//草が存在する時
+            {
+                //Debug.Log("削除機能は実行しています");
+                HPColumn[signal] = HPColumn[signal] - 1; // HPを減らす
+            }
+
+            // zColumnの内容をデバッグ表示
+            for (int i = 0; i < 5; i++)
+            {
+                //Debug.Log($"HPColumn[{i}] = {HPColumn[i]}");
+                Debug.Log($"zColumn[{i}] = {zColumn[i]}");
+            }
+            return; // 処理終了
         }
 
-        Debug.LogWarning($"Signal ({signal.Item1}, {signal.Item2}) not found in kusaGrid.");
+        Debug.LogWarning($"Signal {signal} not found in kusaGrid.");
     }
 
+
+    // zColumnがすべてゼロかどうかをチェック
     bool IsZColumnAllZero()
     {
         for (int i = 0; i < 5; i++)
         {
-            // zColumn 配列のすべての要素が (0, 0) であれば true を返す
-            if (kusaGrid[zColumn[i].Item1, zColumn[i].Item2] != (0, 0))
+            if (HPColumn[i] != 0)
             {
-                return false;
+                return false; // ゼロでない要素があればfalse
             }
         }
-        return true; // zColumn の全てが(0,0)の場合
+        return true; // 全てゼロならtrue
     }
 
-    void OnCameraMoveComplete()
+    void LogKusaHP()
     {
-        // カメラの移動が完了したら次の処理を開始
-        isWaitingForMove = false;
+        for (int z = 0; z < kusaHP.GetLength(0); z++)
+        {
+            for (int x = 0; x < kusaHP.GetLength(1); x++)
+            {
+                //Debug.Log($"kusaHP[{z}, {x}] = {kusaHP[z, x]}");
+            }
+        }
     }
 }
