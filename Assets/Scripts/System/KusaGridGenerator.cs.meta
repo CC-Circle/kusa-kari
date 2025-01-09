@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 32e43259a3e764b16bb4e059c00f9680
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cylinderPrefab: {fileID: 8292533582136434823, guid: 188124cabdb054347b03129cd63d55f6, type: 3}
+  - kusaStart: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,6 +7,7 @@ public class thisDestroy : MonoBehaviour
     public GameObject catkusaPrefab;  // catkusaプレハブをInspectorから設定するための変数
     public GameObject grassEffectPrefab;  // grass_effectプレハブをInspectorから設定するための変数
     private Transform dynamicObjectsParent;  // DynamicObjectsオブジェクトを参照する変数
+    public GameObject kusaPrefab;  // kusaプレハブをInspectorから設定するための変数
 
     // ゲームが開始された時にScoreManagerとDynamicObjectsを自動で設定
     void Start()
@@ -36,6 +37,33 @@ public class thisDestroy : MonoBehaviour
     // オブジェクトを破壊し、スコアを追加するメソッド
     public void DestroyObjectAndAddScore()
     {
+        // 自分のyスケールが0.6なら破壊しない
+        if (transform.localScale.y == 0.6f)
+        {
+            //Debug.Log("Object not destroyed due to y scale being 0.6");
+
+            // kusaプレハブを自分の位置に生成
+            if (kusaPrefab != null)
+            {
+                // プレハブを生成し、DynamicObjectsオブジェクトの子として設定
+                GameObject kusa = Instantiate(kusaPrefab, transform.position, Quaternion.identity);
+
+                // 生成されたプレハブの名前を自身のオブジェクト名と同じに変更
+                kusa.name = gameObject.name;
+
+                if (dynamicObjectsParent != null)
+                {
+                    kusa.transform.SetParent(dynamicObjectsParent);  // DynamicObjectsオブジェクトの子に設定
+                }
+                else
+                {
+                    Debug.LogWarning("DynamicObjects parent is not assigned.");
+                }
+            }
+
+            Destroy(gameObject);//ここで破壊
+        }
+
         // catkusaプレハブを自分の位置に生成
         if (catkusaPrefab != null)
         {

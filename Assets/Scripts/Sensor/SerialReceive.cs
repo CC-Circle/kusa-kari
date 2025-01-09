@@ -35,7 +35,7 @@ public class SerialReceive : MonoBehaviour
         }
 
         // Debug
-        Debug.Log(vibrationFlag);
+        //Debug.Log(vibrationFlag);
     }
 
     // Arduinoから受信したデータを処理する
