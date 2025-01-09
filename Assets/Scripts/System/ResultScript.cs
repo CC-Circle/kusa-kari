@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.IO;
+using TMPro;  // TextMeshProを使用するために追加
 using System.Collections;
 
 public class ScoreProcessor : MonoBehaviour
 {
     public GameObject catkusaPrefab;  // プレハブをInspectorで設定
     public GameObject instansPoint;   // 生成する位置の参照
+    public TextMeshProUGUI scoreText; // TextMeshProUGUIを使用してUIに表示
     public float spawnInterval = 0.5f;  // 各プレハブ生成の間隔（秒）
 
     void Start()
@@ -20,7 +22,10 @@ public class ScoreProcessor : MonoBehaviour
 
             // 最後の行からスコアを取り出して100で割る
             int score = ExtractScore(lastLine);
-            int spawnCount = score / 500;
+            int spawnCount = score / 100;
+
+            // 割っていない元のスコアを表示
+            DisplayScore(score);
 
             // `catkusaPrefab`を`spawnCount`回生成
             StartCoroutine(SpawnCatkusaSlowly(spawnCount));
@@ -55,6 +60,23 @@ public class ScoreProcessor : MonoBehaviour
         }
         Debug.LogError("Failed to parse score from line: " + line);
         return 0;
+    }
+
+    // 割っていない元のスコアを画面に表示するメソッド
+    void DisplayScore(int score)
+    {
+        // コンソールに出力
+        Debug.Log("Original Score: " + score);
+
+        // テキストUIに出力（scoreTextが設定されていれば）
+        if (scoreText != null)
+        {
+            scoreText.text = "Score:" + score.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("scoreText is not assigned in the Inspector!");
+        }
     }
 
     // `catkusaPrefab`を指定回数、一定間隔で生成するコルーチン
