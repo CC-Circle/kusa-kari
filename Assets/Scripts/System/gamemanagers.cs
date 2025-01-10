@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     private CameraMove cameraMove;
     private int currentZIndex = 0; // 現在処理中のz列
     private bool isWaitingForMove = false; // 移動完了を待機するフラグ
+    public SerialReceive_left SR_Left; // SerialReceive_leftスクリプトをアタッチ
+    public SerialReceive_right SR_Right; // SerialReceive_rightスクリプトをアタッチ
 
     void Start()
     {
@@ -30,11 +32,26 @@ public class GameManager : MonoBehaviour
         }
 
         // キー入力による信号処理
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
+        // if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
+        // if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
         if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(zColumn[2]);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
+        // if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
+        // if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
+
+        // シリアル通信による信号処理
+        // 左
+        if (SR_Left.Left_Flag) {
+            ReceiveSignal(zColumn[0]);
+            ReceiveSignal(zColumn[1]);
+            SR_Left.Left_Flag = false;
+        }
+
+        // 右
+        if (SR_Right.Right_Flag) {
+            ReceiveSignal(zColumn[3]);
+            ReceiveSignal(zColumn[4]);
+            SR_Right.Right_Flag = false;
+        }
 
         if (IsZColumnAllZero())
         {

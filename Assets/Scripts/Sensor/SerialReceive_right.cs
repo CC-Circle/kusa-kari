@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SerialReceive : MonoBehaviour
+public class SerialReceive_right : MonoBehaviour
 {
-    public SerialHandler serialHandler;
+    public SerialHandler_right serialHandler;
 
-    public bool vibrationFlag = false;
+    // 右の判定フラグ
+    public bool Right_Flag = false;
 
     void Start()
     {
@@ -22,20 +23,20 @@ public class SerialReceive : MonoBehaviour
         }
 
         // Mキーで振動フラグを切り替える
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            if (vibrationFlag)
+            if (Right_Flag)
             {
-                vibrationFlag = false;
+                Right_Flag = false;
             }
             else
             {
-                vibrationFlag = true;
+                Right_Flag = true;
             }
         }
 
         // Debug
-        Debug.Log(vibrationFlag);
+        Debug.Log(Right_Flag);
     }
 
     // Arduinoから受信したデータを処理する
@@ -45,13 +46,13 @@ public class SerialReceive : MonoBehaviour
         {
             if (message.StartsWith("{") && message.Contains("\"vibration\":true"))
             {
-                if (vibrationFlag)
+                if (Right_Flag)
                 {
-                    vibrationFlag = false;
+                    Right_Flag = false;
                 }
                 else
                 {
-                    vibrationFlag = true;
+                    Right_Flag = true;
                 }
             }
             else

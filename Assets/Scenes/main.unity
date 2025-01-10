@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.5748165, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -522,6 +522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e67155b307e4ed4b1e44da80425fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SR_Left: {fileID: 1673210358}
+  SR_Right: {fileID: 1152967836}
 --- !u!114 &254546587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1985,7 +1987,6 @@ Transform:
   - {fileID: 663308652}
   - {fileID: 1048155148}
   - {fileID: 1879547491}
-  - {fileID: 1724354913}
   - {fileID: 871711629}
   - {fileID: 2086034654}
   - {fileID: 1136311712}
@@ -2236,6 +2237,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af900810b17014d7888d9d0c415fea09, type: 3}
   m_PrefabInstance: {fileID: 1151706759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1152967831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1152967834}
+  - component: {fileID: 1152967836}
+  - component: {fileID: 1152967835}
+  m_Layer: 0
+  m_Name: M5stack_right_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1152967834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152967831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1152967835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152967831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906ccf9b64769402f9c6c5747374eea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: /dev/tty.wchusbserial575C0329721
+  baudRate: 115200
+--- !u!114 &1152967836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152967831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbad479adfd13495082dafbd72155ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialHandler: {fileID: 1152967835}
+  Right_Flag: 1
 --- !u!1001 &1194803576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3493,43 +3555,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1673210357}
-  - component: {fileID: 1673210356}
-  - component: {fileID: 1673210355}
+  - component: {fileID: 1673210359}
+  - component: {fileID: 1673210358}
   m_Layer: 0
-  m_Name: M5stackManager
+  m_Name: M5stack_left_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1673210355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673210354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbad479adfd13495082dafbd72155ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serialHandler: {fileID: 1673210356}
-  vibrationFlag: 0
---- !u!114 &1673210356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673210354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 906ccf9b64769402f9c6c5747374eea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  port_01: /dev/tty.usbserial-575C0331181
-  baudRate: 115200
 --- !u!4 &1673210357
 Transform:
   m_ObjectHideFlags: 0
@@ -3545,6 +3579,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1673210358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673210354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5daa8bf926445b18e012f3aff5e99e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialHandler: {fileID: 1673210359}
+  Left_Flag: 0
+--- !u!114 &1673210359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673210354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87aa0d8cb8be2422cbae5a96595e58d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: /dev/tty.wchusbserial575C0331181
+  baudRate: 115200
 --- !u!1 &1847670349
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,9 +4497,6 @@ SceneRoots:
   - {fileID: 785365996}
   - {fileID: 907542616}
   - {fileID: 757846639}
-  - {fileID: 1202403849}
-  - {fileID: 1255369232}
-  - {fileID: 7668326419989731706}
-  - {fileID: 1020538265}
-  - {fileID: 619929917}
   - {fileID: 1673210357}
+  - {fileID: 1152967834}
+  - {fileID: 1566621466}
