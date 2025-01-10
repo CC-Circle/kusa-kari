@@ -33,9 +33,9 @@ void setup() {
   // フォントの変更
   M5.Lcd.setTextFont(2);
 
-  // "M5stack_01" を画面中央に表示
-  M5.Lcd.setCursor(160, 120);  // 画面中央にカーソル設定
-  M5.Lcd.print("M5stack_01");
+  // "M5stack_Left" を画面中央に表示
+  M5.Lcd.setCursor(130, 120);  // 画面中央にカーソル設定
+  M5.Lcd.print("M5stack_Right");
 }
 
 void loop() {
@@ -77,14 +77,12 @@ void loop() {
 void Debug_vibration() {
   // 画面を赤色で塗りつぶし、警告メッセージを表示
   M5.Lcd.fillScreen(RED);       // 画面を赤色で塗りつぶす
-  M5.Lcd.setCursor(160, 120);   // 画面中央にカーソル設定
   M5.Lcd.setTextColor(WHITE, RED);
-  M5.Lcd.print("VIBRATION!");
   delay(500);                   // 短い遅延（0.5秒）
 
   // 画面を元に戻す
   M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setCursor(160, 120);
+  M5.Lcd.setCursor(130, 120);
   M5.Lcd.setTextColor(WHITE, BLACK);
-  M5.Lcd.print("M5stack_01");
+  M5.Lcd.print("M5stack_Right");
 }
