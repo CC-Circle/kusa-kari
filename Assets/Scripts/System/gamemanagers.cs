@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private KusaGridGenerator kusaGridGenerator;
     // 移動待機状態のフラグ（現在未使用）
     private bool isWaitingForMove = false;
+    public SR_Left SR_Left; // SR_Leftをアタッチ
+    public SR_Right SR_Right; // SR_Rightをアタッチ
 
     void Start()
     {
@@ -72,15 +74,30 @@ public class GameManager : MonoBehaviour
         ///***この下がシグナルを送信してる部分です。
         
         // キー入力に応じてzColumnの信号を処理
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(zColumn[2]);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
+        // if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
+        // if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
+        // if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(zColumn[2]);
+        // if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
+        // if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
 
         ///***とりあえずこの中で[1]と[3]をセンサーに変えてみて欲しい
         ///***プログラムがクチャクチャだから今回は延命で
         ///***あと出来そうならBGMとSE適当でいいからぶち込んで
+        
+        // シリアル通信による信号処理
+        // 左
+        if (SR_Left.Left_Flag) {
+            ReceiveSignal(zColumn[0]);
+            ReceiveSignal(zColumn[1]);
+            SR_Left.Left_Flag = false;
+        }
+
+        // 右
+        if (SR_Right.Right_Flag) {
+            ReceiveSignal(zColumn[3]);
+            ReceiveSignal(zColumn[4]);
+            SR_Right.Right_Flag = false;
+        }
         
         // zColumnが全てゼロなら、カメラを進めて次のZインデックスを設定
         if (IsZColumnAllZero())

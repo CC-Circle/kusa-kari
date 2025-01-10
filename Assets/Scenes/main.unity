@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.67936105, g: 0.73288757, b: 0.8046863, a: 1}
+  m_IndirectSpecularColor: {r: 0.5019536, g: 0.5019536, b: 0.5019536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -523,6 +523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e67155b307e4ed4b1e44da80425fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SR_Left: {fileID: 1673210358}
+  SR_Right: {fileID: 1158148900}
 --- !u!114 &254546587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2236,6 +2238,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af900810b17014d7888d9d0c415fea09, type: 3}
   m_PrefabInstance: {fileID: 1151706759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1158148896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158148899}
+  - component: {fileID: 1158148901}
+  - component: {fileID: 1158148900}
+  m_Layer: 0
+  m_Name: M5stack_Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158148899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158148896}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158148900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158148896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf77d717215bd4cac875f8b052b2051c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialHandler: {fileID: 1158148901}
+  Right_Flag: 0
+--- !u!114 &1158148901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158148896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c406b67a22f4be99f47e01a4a3e6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: /dev/tty.wchusbserial575C0329721
+  baudRate: 115200
 --- !u!1001 &1194803576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3495,43 +3558,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1673210357}
-  - component: {fileID: 1673210356}
-  - component: {fileID: 1673210355}
+  - component: {fileID: 1673210359}
+  - component: {fileID: 1673210358}
   m_Layer: 0
-  m_Name: M5stackManager
+  m_Name: M5stack_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1673210355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673210354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbad479adfd13495082dafbd72155ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serialHandler: {fileID: 1673210356}
-  vibrationFlag: 0
---- !u!114 &1673210356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673210354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 906ccf9b64769402f9c6c5747374eea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  port_01: /dev/tty.usbserial-575C0331181
-  baudRate: 115200
 --- !u!4 &1673210357
 Transform:
   m_ObjectHideFlags: 0
@@ -3547,6 +3582,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1673210358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673210354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbad479adfd13495082dafbd72155ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialHandler: {fileID: 1673210359}
+  Left_Flag: 0
+--- !u!114 &1673210359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673210354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906ccf9b64769402f9c6c5747374eea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: /dev/tty.wchusbserial575C0331181
+  baudRate: 115200
 --- !u!1001 &1738752705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4641,4 +4704,5 @@ SceneRoots:
   - {fileID: 907542616}
   - {fileID: 757846639}
   - {fileID: 1673210357}
+  - {fileID: 1158148899}
   - {fileID: 1566621466}
