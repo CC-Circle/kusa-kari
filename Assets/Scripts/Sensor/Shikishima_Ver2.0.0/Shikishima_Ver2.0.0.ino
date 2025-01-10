@@ -19,7 +19,7 @@ void setup() {
   M5.Power.begin();
 
   // Bluetoothの初期化（M5stack_01,02...）
-  // bts.begin("M5Stack_right");
+  // bts.begin("M5Stack_01");
 
   // IMU（加速度センサー）の初期化
   M5.IMU.Init();
@@ -34,8 +34,8 @@ void setup() {
   M5.Lcd.setTextFont(2);
 
   // "M5stack_01" を画面中央に表示
-  M5.Lcd.setCursor(140, 120);  // 画面中央にカーソル設定
-  M5.Lcd.print("M5stack_right");
+  M5.Lcd.setCursor(160, 120);  // 画面中央にカーソル設定
+  M5.Lcd.print("M5stack_01");
 }
 
 void loop() {
@@ -77,14 +77,14 @@ void loop() {
 void Debug_vibration() {
   // 画面を赤色で塗りつぶし、警告メッセージを表示
   M5.Lcd.fillScreen(RED);       // 画面を赤色で塗りつぶす
-  M5.Lcd.setCursor(140, 120);   // 画面中央にカーソル設定
+  M5.Lcd.setCursor(160, 120);   // 画面中央にカーソル設定
   M5.Lcd.setTextColor(WHITE, RED);
-  M5.Lcd.print("振動あり");
+  M5.Lcd.print("VIBRATION!");
   delay(500);                   // 短い遅延（0.5秒）
 
   // 画面を元に戻す
   M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setCursor(140, 120);
+  M5.Lcd.setCursor(160, 120);
   M5.Lcd.setTextColor(WHITE, BLACK);
-  M5.Lcd.print("M5stack_right");
+  M5.Lcd.print("M5stack_01");
 }
