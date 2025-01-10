@@ -2,7 +2,7 @@ using UnityEngine;
 using System.IO.Ports;
 using System.Threading;
 
-public class SerialHandler_left : MonoBehaviour
+public class SerialHandler : MonoBehaviour
 {
     // デリゲート型を宣言し、シリアルデータ受信イベントを定義します
     public delegate void SerialDataReceivedEventHandler(string message);
@@ -10,7 +10,7 @@ public class SerialHandler_left : MonoBehaviour
 
     // シリアルポート名
     // ls /dev/tty* | grep usb
-    [SerializeField] private string port = "/dev/tty.wchusbserial575C0331181";
+    [SerializeField] private string port_01 = "/dev/tty.usbserial-575C0331181";
     public int baudRate = 115200; // ボーレート（通信速度）
 
     private SerialPort serialPort; // シリアルポートのインスタンス
@@ -38,7 +38,7 @@ public class SerialHandler_left : MonoBehaviour
     {
         try
         {
-            serialPort = new SerialPort(port, baudRate); // シリアルポートを初期化
+            serialPort = new SerialPort(port_01, baudRate); // シリアルポートを初期化
             serialPort.Open(); // シリアルポートを開く
             serialPort.DiscardInBuffer(); // 受信バッファをクリア
             serialPort.DiscardOutBuffer(); // 送信バッファをクリア
