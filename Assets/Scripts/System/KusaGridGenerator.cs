@@ -70,13 +70,19 @@ public class KusaGridGenerator : MonoBehaviour
             for (int x = 0; x < kusaGrid.GetLength(1); x++)
             {
                 randnum = Random.Range(1, 5); // 1〜4のランダムな整数を生成
-                if(randnum == 1)
-                {
-                    kusaHP[z,x] = 2;
+                if(x != 2){
+                    if(randnum == 1)
+                    {
+                        kusaHP[z,x] = 2;
+                    }else{
+                        kusaHP[z,x] = 1;
+                    }
+                    kusaGrid[z, x] = (z, x);
                 }else{
                     kusaHP[z,x] = 1;
+                    kusaGrid[z, x] = (z, x);
                 }
-                kusaGrid[z, x] = (z, x);
+                
             }
         }
     }

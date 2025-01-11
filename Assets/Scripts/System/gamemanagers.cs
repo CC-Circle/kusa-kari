@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     // KusaGridGeneratorの参照
     private KusaGridGenerator kusaGridGenerator;
     // 移動待機状態のフラグ（現在未使用）
-    private bool isWaitingForMove = false;
+    //private bool isWaitingForMove = false;
 
     // センサー関連
     // シリアル通信が利用可能かのフラグ
