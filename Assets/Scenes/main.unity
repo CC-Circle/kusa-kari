@@ -525,6 +525,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SR_Left: {fileID: 1673210358}
   SR_Right: {fileID: 1158148900}
+  SH_Left: {fileID: 1673210359}
+  SH_Right: {fileID: 1158148901}
 --- !u!114 &254546587
 MonoBehaviour:
   m_ObjectHideFlags: 0

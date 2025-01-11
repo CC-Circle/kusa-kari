@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     public SH_Left SH_Left;
     // SH_Rightをアタッチ
     public SH_Right SH_Right;
+    // 左右が刈られた状態を記録するフラグ
+    private bool leftCut = false;
+    private bool rightCut = false;
 
     void Start()
     {
@@ -95,14 +98,30 @@ public class GameManager : MonoBehaviour
             {
                 ReceiveSignal(zColumn[0]);
                 ReceiveSignal(zColumn[1]);
+                leftCut = true; // 左が刈られた状態を記録
                 SR_Left.Left_Flag = false;
+
+                // 左が刈られた後に右が刈られていたら真ん中を刈る
+                if (rightCut)
+                {
+                    ReceiveSignal(zColumn[2]); // 真ん中の草を刈る
+                    ResetCutFlags(); // 状態をリセット
+                }
             }
 
             if (SR_Right.Right_Flag)
             {
                 ReceiveSignal(zColumn[3]);
                 ReceiveSignal(zColumn[4]);
+                rightCut = true; // 右が刈られた状態を記録
                 SR_Right.Right_Flag = false;
+
+                // 右が刈られた後に左が刈られていたら真ん中を刈る
+                if (leftCut)
+                {
+                    ReceiveSignal(zColumn[2]); // 真ん中の草を刈る
+                    ResetCutFlags(); // 状態をリセット
+                }
             }
         }
         else
@@ -218,5 +237,12 @@ public class GameManager : MonoBehaviour
                 //Debug.Log($"kusaHP[{z}, {x}] = {kusaHP[z, x]}");
             }
         }
+    }
+
+    // 左右の刈られた状態をリセットするメソッド
+    void ResetCutFlags()
+    {
+        leftCut = false;
+        rightCut = false;
     }
 }
