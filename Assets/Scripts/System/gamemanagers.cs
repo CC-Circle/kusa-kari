@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
     private int[] zColumn = new int[5];
     // 現在のZ軸HP配列を格納する配列
     private int[] HPColumn = new int[5];
-
-
     // 各位置の草のHPを格納する2次元配列
     private int[,] kusaHP = new int[100, 5];
     // カメラを動かすためのスクリプト参照
@@ -21,8 +19,18 @@ public class GameManager : MonoBehaviour
     private KusaGridGenerator kusaGridGenerator;
     // 移動待機状態のフラグ（現在未使用）
     private bool isWaitingForMove = false;
-    public SR_Left SR_Left; // SR_Leftをアタッチ
-    public SR_Right SR_Right; // SR_Rightをアタッチ
+
+    // センサー関連
+    // シリアル通信が利用可能かのフラグ
+    private bool isSerialAvailable = false;
+    // SR_Leftをアタッチ
+    public SR_Left SR_Left;
+    // SR_Rightをアタッチ
+    public SR_Right SR_Right;
+    // SH_Leftをアタッチ
+    public SH_Left SH_Left;
+    // SH_Rightをアタッチ
+    public SH_Right SH_Right;
 
     void Start()
     {
@@ -46,7 +54,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("CameraMove script not found on the Main Camera.");
         }
 
-        
+
 
         LogKusaHP();
 
@@ -60,6 +68,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("CameraMove script not found on the Main Camera.");
         }
+
+        // シリアル通信が利用可能かのフラグを設定
+        if (SH_Left.IsOpen && SH_Right.IsOpen)
+        {
+            isSerialAvailable = true;
+        }
+        else
+        {
+            Debug.LogWarning("Serial communication is not set up. Using keyboard input as fallback.");
+        }
     }
 
     void Update()
@@ -70,35 +88,33 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        ///***柴田用
-        ///***この下がシグナルを送信してる部分です。
-        
-        // キー入力に応じてzColumnの信号を処理
-        // if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(zColumn[0]);
-        // if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(zColumn[1]);
-        // if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(zColumn[2]);
-        // if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(zColumn[3]);
-        // if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(zColumn[4]);
+        if (isSerialAvailable)
+        {
+            // シリアル通信による信号処理
+            if (SR_Left.Left_Flag)
+            {
+                ReceiveSignal(zColumn[0]);
+                ReceiveSignal(zColumn[1]);
+                SR_Left.Left_Flag = false;
+            }
 
-        ///***とりあえずこの中で[1]と[3]をセンサーに変えてみて欲しい
-        ///***プログラムがクチャクチャだから今回は延命で
-        ///***あと出来そうならBGMとSE適当でいいからぶち込んで
-        
-        // シリアル通信による信号処理
-        // 左
-        if (SR_Left.Left_Flag) {
-            ReceiveSignal(zColumn[0]);
-            ReceiveSignal(zColumn[1]);
-            SR_Left.Left_Flag = false;
+            if (SR_Right.Right_Flag)
+            {
+                ReceiveSignal(zColumn[3]);
+                ReceiveSignal(zColumn[4]);
+                SR_Right.Right_Flag = false;
+            }
+        }
+        else
+        {
+            // キーボードによる信号処理
+            if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(0);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(2);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(3);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(4);
         }
 
-        // 右
-        if (SR_Right.Right_Flag) {
-            ReceiveSignal(zColumn[3]);
-            ReceiveSignal(zColumn[4]);
-            SR_Right.Right_Flag = false;
-        }
-        
         // zColumnが全てゼロなら、カメラを進めて次のZインデックスを設定
         if (IsZColumnAllZero())
         {
@@ -118,7 +134,7 @@ public class GameManager : MonoBehaviour
         for (int x = 0; x < 5; x++)
         {
             zColumn[x] = kusaGrid[zIndex, x].Item2; // kusaGridから対応する値を取得
-            HPColumn[x] = kusaHP[zIndex,x]; // kusaHPから取得
+            HPColumn[x] = kusaHP[zIndex, x]; // kusaHPから取得
         }
     }
 
@@ -142,14 +158,14 @@ public class GameManager : MonoBehaviour
         {
             GameObject objToDelete = GameObject.Find($"z{currentZIndex}x{signal}");
             if (objToDelete != null)
-            {   
+            {
                 //Debug.Log("tuuka");
                 thisDestroy destroyScript = objToDelete.GetComponent<thisDestroy>();
 
                 if (destroyScript != null)
                 {
                     destroyScript.DestroyObjectAndAddScore();
-                    
+
                 }
                 else
                 {
@@ -161,7 +177,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"Object z{currentZIndex}x{signal} not found.");
             }
 
-            if(HPColumn[signal]  > 0)//草が存在する時
+            if (HPColumn[signal] > 0)//草が存在する時
             {
                 //Debug.Log("削除機能は実行しています");
                 HPColumn[signal] = HPColumn[signal] - 1; // HPを減らす
