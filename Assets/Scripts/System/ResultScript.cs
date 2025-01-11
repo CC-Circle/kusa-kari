@@ -22,7 +22,7 @@ public class ScoreProcessor : MonoBehaviour
 
             // 最後の行からスコアを取り出して100で割る
             int score = ExtractScore(lastLine);
-            int spawnCount = score / 100;
+            int spawnCount = score / 50;
 
             // 割っていない元のスコアを表示
             DisplayScore(score);
