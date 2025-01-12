@@ -6,7 +6,7 @@ public class StartCount : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI countdownText; // カウントダウンを表示するTextMeshProUGUI
     private bool isCounting = false; // カウントダウン中かどうかのフラグ
-    private string[] countdownMessages = { "5", "4", "3", "2", "1", "Start!!" }; // 5秒のカウントダウンメッセージ
+    private string[] countdownMessages = { "3", "2", "1", "Start!!" }; // 3秒のカウントダウンメッセージ
 
     private GameObject managersObject;
     [SerializeField]

@@ -8,6 +8,7 @@ public class thisDestroy : MonoBehaviour
     public GameObject grassEffectPrefab;  // grass_effectプレハブをInspectorから設定するための変数
     private Transform dynamicObjectsParent;  // DynamicObjectsオブジェクトを参照する変数
     public GameObject kusaPrefab;  // kusaプレハブをInspectorから設定するための変数
+    private BGMManager bgmManager;  // BGMManagerを参照するための変数
 
     // ゲームが開始された時にScoreManagerとDynamicObjectsを自動で設定
     void Start()
@@ -19,6 +20,15 @@ public class thisDestroy : MonoBehaviour
         if (scoreManager == null)
         {
             Debug.LogWarning("ScoreManager not found in the scene!");
+        }
+
+        // BGMManagerオブジェクトをシーン内で検索して取得
+        bgmManager = FindObjectOfType<BGMManager>();
+
+        // BGMManagerが見つからない場合は警告を表示
+        if (bgmManager == null)
+        {
+            Debug.LogWarning("BGMManager not found in the scene!");
         }
 
         // DynamicObjectsオブジェクトをシーン内で検索して取得
@@ -37,11 +47,15 @@ public class thisDestroy : MonoBehaviour
     // オブジェクトを破壊し、スコアを追加するメソッド
     public void DestroyObjectAndAddScore()
     {
+        // BGMManagerのcatBGMメソッドを呼び出し
+        if (bgmManager != null)
+        {
+            bgmManager.catBGM();
+        }
+
         // 自分のyスケールが0.6なら破壊しない
         if (transform.localScale.y == 0.6f)
         {
-            //Debug.Log("Object not destroyed due to y scale being 0.6");
-
             // kusaプレハブを自分の位置に生成
             if (kusaPrefab != null)
             {
@@ -60,8 +74,14 @@ public class thisDestroy : MonoBehaviour
                     Debug.LogWarning("DynamicObjects parent is not assigned.");
                 }
             }
+            // スコアの加算
+            if (scoreManager != null)
+            {
+                scoreManager.AddScore(scoreToAdd);  // スコアを加算
+            }
 
-            Destroy(gameObject);//ここで破壊
+            Destroy(gameObject); // ここで破壊
+            return;
         }
 
         // catkusaプレハブを自分の位置に生成

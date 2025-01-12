@@ -120,3 +120,5 @@ MonoBehaviour:
   scoreToAdd: 100
   catkusaPrefab: {fileID: 7617497139787998429, guid: 61402984d0c8548f89dd101c91988903, type: 3}
   grassEffectPrefab: {fileID: 8659326982220963133, guid: c7960ae59785b4cfcb2b51b0c0866306, type: 3}
+  kusaPrefab: {fileID: 0}
+  destroySound: {fileID: 8300000, guid: f8ddc6f000e70484b9a3d573eed90410, type: 3}
