@@ -10,7 +10,8 @@ public class SH_Right : MonoBehaviour
 
     // シリアルポート名
     // ls /dev/tty* | grep usb
-    [SerializeField] private string port = "/dev/tty.wchusbserial575C0329721";
+    // 左側のポート
+    [SerializeField] private string port = "/dev/tty.wchusbserial55910044091";
     public int baudRate = 115200; // ボーレート（通信速度）
 
     private SerialPort serialPort; // シリアルポートのインスタンス

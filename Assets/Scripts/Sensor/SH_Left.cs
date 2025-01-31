@@ -10,6 +10,7 @@ public class SH_Left : MonoBehaviour
 
     // シリアルポート名
     // ls /dev/tty* | grep usb
+    // 真ん中のポート
     [SerializeField] private string port = "/dev/tty.wchusbserial575C0331181";
     public int baudRate = 115200; // ボーレート（通信速度）
 
