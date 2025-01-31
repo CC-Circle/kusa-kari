@@ -65,6 +65,11 @@ public class SR_Right : MonoBehaviour
                     float accZ = float.Parse(values[2]);
                     Debug.Log($"Acceleration Data: X={accX}, Y={accY}, Z={accZ}");
                 }
+                // 不要なデータをスキップ
+                else if (message.Contains("imu_flag:-1IMU_MPU6886"))
+                {
+                    return;
+                }
                 else
                 {
                     Debug.LogWarning($"Unexpected data format: {message}");

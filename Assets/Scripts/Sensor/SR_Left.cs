@@ -58,6 +58,7 @@ public class SR_Left : MonoBehaviour
             }
             else
             {
+                // 加速度取得用の処理
                 string[] values = message.Split(',');
                 if (values.Length == 3)
                 {
@@ -65,6 +66,11 @@ public class SR_Left : MonoBehaviour
                     float accY = float.Parse(values[1]);
                     float accZ = float.Parse(values[2]);
                     Debug.Log($"Acceleration Data: X={accX}, Y={accY}, Z={accZ}");
+                }
+                // 不要なデータをスキップ
+                else if (message.Contains("imu_flag:-1IMU_MPU6886"))
+                {
+                    return;
                 }
                 else
                 {
