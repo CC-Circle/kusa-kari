@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cylinderPrefab: {fileID: 8292533582136434823, guid: 188124cabdb054347b03129cd63d55f6, type: 3}
-  kusalongPrefab: {fileID: 1054240653287872475, guid: e299235e936834c3798ab3b5084b289f, type: 3}
+  kusalongPrefab: {fileID: 1063591919289442978, guid: d3dc6508025e2454a91fce198c9c92df, type: 3}
   rows: 100
   columns: 5
   spacing: 1.25

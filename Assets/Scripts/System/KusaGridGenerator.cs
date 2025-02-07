@@ -46,10 +46,10 @@ public class KusaGridGenerator : MonoBehaviour
                 GameObject instance = Instantiate(prefabToInstantiate, position, Quaternion.identity);
 
                 // kusalongPrefab が選ばれた場合、yスケールを0.6に設定
-                if (prefabToInstantiate == kusalongPrefab)
-                {
-                    instance.transform.localScale = new Vector3(instance.transform.localScale.x, 0.6f, instance.transform.localScale.z);
-                }
+                //if (prefabToInstantiate == kusalongPrefab)
+                //{
+                    instance.transform.localRotation = Quaternion.Euler(0, 180, 0); // y軸を180度回転
+                //}
 
                 // kusastartの子オブジェクトとして設定（親設定）
                 instance.transform.SetParent(kusaStart.transform);
