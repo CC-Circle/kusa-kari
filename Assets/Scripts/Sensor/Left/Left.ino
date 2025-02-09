@@ -8,10 +8,10 @@ BluetoothSerial bts;
 float accX = 0.0F, accY = 0.0F, accZ = 0.0F;
 
 // 前回の加速度データ
-float lastAccX = 0.0F;
+float lastAccY = 0.0F;
 
 // 閾値
-const float threshold = 0.5;
+const float threshold = 0.3;
 
 void setup() {
   // M5Stackの初期化
@@ -57,7 +57,7 @@ void loop() {
   // Serial.println(accZ);
 
   // 振動を検知（前回値との差分を計算）
-  float diff = abs(accX - lastAccX);
+  float diff = abs(accY - lastAccY);
   
   // 振動を検知した時の処理
   if (diff > threshold) {
@@ -67,7 +67,7 @@ void loop() {
   }
 
   // 前回の加速度値を更新
-  lastAccX = accX;
+  lastAccY = accY;
   
   // 遅延
   delay(10); // 100ms
