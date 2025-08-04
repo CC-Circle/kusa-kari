@@ -510,9 +510,9 @@ MonoBehaviour:
   kusalongPrefab: {fileID: 1054240653287872475, guid: e299235e936834c3798ab3b5084b289f, type: 3}
   kusaStart: {fileID: 1255369231}
   enemyGenerator: {fileID: 254546588}
-  enemy1Prefab: {fileID: 0}
-  enemy2Prefab: {fileID: 0}
-  enemy3Prefab: {fileID: 0}
+  enemy1Prefab: {fileID: 6259090621428453892, guid: d2fbcbcf6b8994a25bfaf64c2b50ba3d, type: 3}
+  enemy2Prefab: {fileID: 6259090621428453892, guid: d2fbcbcf6b8994a25bfaf64c2b50ba3d, type: 3}
+  enemy3Prefab: {fileID: 6259090621428453892, guid: d2fbcbcf6b8994a25bfaf64c2b50ba3d, type: 3}
 --- !u!114 &254546586
 MonoBehaviour:
   m_ObjectHideFlags: 0
