@@ -4,22 +4,32 @@ public class KusaGridGenerator : MonoBehaviour
 {
     public GameObject cylinderPrefab;
     public GameObject kusalongPrefab; // 別のプレハブを追加
-    public int rows = 100;
-    public int columns = 5;
-    public float spacing = 1.0f;
+    private int rows = 100;
+    private int columns = 3;
+    private float spacing1 = 2.5f; //横幅
+    private float spacing2 = 1.25f; //縦幅
 
     [SerializeField]
     private GameObject kusaStart;
     private int randnum;
+    public (int, int)[,] kusaGrid = new (int, int)[100, 3];
+    public int[,] kusaHP = new int[100, 3];
 
-    public (int, int)[,] kusaGrid = new (int, int)[100, 5];
-    public int[,] kusaHP = new int[100, 5];
+    [SerializeField] private EnemyGenerator enemyGenerator;
+
+    // 敵のプレハブを1〜3に対応して登録
+    [SerializeField] private GameObject enemy1Prefab;
+    [SerializeField] private GameObject enemy2Prefab;
+    [SerializeField] private GameObject enemy3Prefab;
 
     void Awake()
     {
         if (kusaStart != null)
         {
-            
+            // 正しいサイズで初期化
+            kusaGrid = new (int, int)[rows, columns];
+            kusaHP = new int[rows, columns];
+
             InitializeKusaGrid();
             GenerateCylinderGrid();
         }
@@ -27,38 +37,66 @@ public class KusaGridGenerator : MonoBehaviour
         {
             Debug.LogError("kusastart オブジェクトがアサインされていません");
         }
+
+        //敵生成用
+        enemyGenerator = GetComponent<EnemyGenerator>();
+
     }
 
     void GenerateCylinderGrid()
     {
-        Vector3 origin = kusaStart.transform.position; // kusastartの座標を取得
+        Vector3 origin = kusaStart.transform.position;
 
         for (int z = 0; z < rows; z++)
         {
             for (int x = 0; x < columns; x++)
             {
-                Vector3 position = origin + new Vector3(x * spacing, 0, z * spacing);
+                Vector3 position = origin + new Vector3(x * spacing1, 0, z * spacing2);
 
-                // プレハブを選択
-                GameObject prefabToInstantiate = (kusaHP[z,x] == 2) ? kusalongPrefab : cylinderPrefab;
+                GameObject prefabToInstantiate = (kusaHP[z, x] == 2) ? kusalongPrefab : cylinderPrefab;
 
-                // プレハブをインスタンス化
                 GameObject instance = Instantiate(prefabToInstantiate, position, Quaternion.identity);
 
-                // kusalongPrefab が選ばれた場合、yスケールを0.6に設定
                 if (prefabToInstantiate == kusalongPrefab)
                 {
                     instance.transform.localScale = new Vector3(instance.transform.localScale.x, 0.6f, instance.transform.localScale.z);
                 }
 
-                // kusastartの子オブジェクトとして設定（親設定）
                 instance.transform.SetParent(kusaStart.transform);
 
                 // シリンダーに一意の名前を付ける
-                instance.name = $"z{z}x{x}";
+                string baseName = $"z{z}x{x}";
+                instance.name = baseName;
+
+                // 敵タイプを取得
+                int enemyType = enemyGenerator.GenerateEnemy();
+
+                if (enemyType != 0)
+                {
+                    // 敵を同じ位置に生成
+                    switch (enemyType)
+                    {
+                        case 1:
+                            Instantiate(enemy1Prefab, position, Quaternion.identity);
+                            break;
+                        case 2:
+                            Instantiate(enemy2Prefab, position, Quaternion.identity);
+                            break;
+                        case 3:
+                            Instantiate(enemy3Prefab, position, Quaternion.identity);
+                            break;
+                    }
+
+                    // kusaHPを0に
+                    kusaHP[z, x] = 0;
+
+                    // オブジェクト名の末尾に "-1" を追加
+                    instance.name = baseName + "-1";
+                }
             }
         }
     }
+
 
 
 

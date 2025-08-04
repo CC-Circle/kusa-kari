@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour
     private (int, int)[,] kusaGrid;
 
     // 現在のZ軸列を格納する配列
-    private int[] zColumn = new int[5];
+    private int[] zColumn = new int[3];
     // 現在のZ軸HP配列を格納する配列
-    private int[] HPColumn = new int[5];
+    private int[] HPColumn = new int[3];
     // 各位置の草のHPを格納する2次元配列
-    private int[,] kusaHP = new int[100, 5];
+    private int[,] kusaHP = new int[100, 3];
     // カメラを動かすためのスクリプト参照
-    private CameraMove cameraMove;
+    public CameraMove cameraMove;
     // 現在のZ軸インデックス
     private int currentZIndex = 0;
     // KusaGridGeneratorの参照
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     // SH_Rightをアタッチ
     public SH_Right SH_Right;
     // 左右が刈られた状態を記録するフラグ
-    private bool leftCut = false;
-    private bool rightCut = false;
+    //private bool leftCut = false;
+    //private bool rightCut = false;
 
     void Start()
     {
@@ -93,45 +93,27 @@ public class GameManager : MonoBehaviour
 
         if (isSerialAvailable)
         {
-            // シリアル通信による信号処理
-            if (SR_Left.Left_Flag)
-            {
-                ReceiveSignal(zColumn[0]);
-                ReceiveSignal(zColumn[1]);
-                leftCut = true; // 左が刈られた状態を記録
-                SR_Left.Left_Flag = false;
-
-                // 左が刈られた後に右が刈られていたら真ん中を刈る
-                if (rightCut)
-                {
-                    ReceiveSignal(zColumn[2]); // 真ん中の草を刈る
-                    ResetCutFlags(); // 状態をリセット
-                }
-            }
-
-            if (SR_Right.Right_Flag)
-            {
-                ReceiveSignal(zColumn[3]);
-                ReceiveSignal(zColumn[4]);
-                rightCut = true; // 右が刈られた状態を記録
-                SR_Right.Right_Flag = false;
-
-                // 右が刈られた後に左が刈られていたら真ん中を刈る
-                if (leftCut)
-                {
-                    ReceiveSignal(zColumn[2]); // 真ん中の草を刈る
-                    ResetCutFlags(); // 状態をリセット
-                }
-            }
+            //太田メモ☑️
+            //中央草の処理が無くなったので、ここは完全に書き換え
         }
         else
         {
-            // キーボードによる信号処理
-            if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(0);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(1);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(2);
-            if (Input.GetKeyDown(KeyCode.Alpha4)) ReceiveSignal(3);
-            if (Input.GetKeyDown(KeyCode.Alpha5)) ReceiveSignal(4);
+            // デバッグ：キー入力（3→右端, 2→中央, 1→左端）
+            if (Input.GetKeyDown(KeyCode.Alpha3)) ReceiveSignal(2); // 右端（x=2）
+            if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(1); // 中央（x=1）
+            if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(0); // 左端（x=0）
+
+            // 全ての草が刈られたら次の列へ
+            if (IsZColumnAllZero())
+            {
+                cameraMove?.MoveForward();
+
+                if (currentZIndex < kusaGrid.GetLength(0) - 1)
+                {
+                    currentZIndex++;
+                    InitializeZColumn(currentZIndex);
+                }
+            }
         }
 
         // zColumnが全てゼロなら、カメラを進めて次のZインデックスを設定
@@ -150,7 +132,7 @@ public class GameManager : MonoBehaviour
     // 指定されたZインデックスに基づいてzColumnを初期化
     void InitializeZColumn(int zIndex)
     {
-        for (int x = 0; x < 5; x++)
+        for (int x = 0; x < 3; x++)
         {
             zColumn[x] = kusaGrid[zIndex, x].Item2; // kusaGridから対応する値を取得
             HPColumn[x] = kusaHP[zIndex, x]; // kusaHPから取得
@@ -178,13 +160,11 @@ public class GameManager : MonoBehaviour
             GameObject objToDelete = GameObject.Find($"z{currentZIndex}x{signal}");
             if (objToDelete != null)
             {
-                //Debug.Log("tuuka");
                 thisDestroy destroyScript = objToDelete.GetComponent<thisDestroy>();
 
                 if (destroyScript != null)
                 {
                     destroyScript.DestroyObjectAndAddScore();
-
                 }
                 else
                 {
@@ -203,10 +183,10 @@ public class GameManager : MonoBehaviour
             }
 
             // zColumnの内容をデバッグ表示
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
-                //Debug.Log($"HPColumn[{i}] = {HPColumn[i]}");
-                Debug.Log($"zColumn[{i}] = {zColumn[i]}");
+                // Debug.Log($"HPColumn[{i}] = {HPColumn[i]}");
+                //Debug.Log($"zColumn[{i}] = {zColumn[i]}");
             }
             return; // 処理終了
         }
@@ -218,14 +198,12 @@ public class GameManager : MonoBehaviour
     // zColumnがすべてゼロかどうかをチェック
     bool IsZColumnAllZero()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (HPColumn[i] != 0)
-            {
-                return false; // ゼロでない要素があればfalse
-            }
+                return false;
         }
-        return true; // 全てゼロならtrue
+        return true;
     }
 
     void LogKusaHP()
@@ -237,12 +215,5 @@ public class GameManager : MonoBehaviour
                 //Debug.Log($"kusaHP[{z}, {x}] = {kusaHP[z, x]}");
             }
         }
-    }
-
-    // 左右の刈られた状態をリセットするメソッド
-    void ResetCutFlags()
-    {
-        leftCut = false;
-        rightCut = false;
     }
 }

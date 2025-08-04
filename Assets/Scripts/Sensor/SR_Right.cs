@@ -19,7 +19,7 @@ public class SR_Right : MonoBehaviour
         // SerialPort が開いていない場合のチェック
         if (!serialHandler.IsOpen)
         {
-            Debug.LogWarning("Serial port is not open.");
+            //Debug.LogWarning("Serial port is not open.");
         }
 
         // Mキーで振動フラグを切り替える
@@ -36,7 +36,7 @@ public class SR_Right : MonoBehaviour
         }
 
         // Debug
-        Debug.Log(Right_Flag);
+        //Debug.Log(Right_Flag);
     }
 
     // Arduinoから受信したデータを処理する
