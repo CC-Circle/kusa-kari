@@ -53,8 +53,8 @@ public class thisDestroy : MonoBehaviour
             bgmManager.catBGM();
         }
 
-        // 自分のyスケールが0.6なら破壊しない
-        if (transform.localScale.y == 0.6f)
+        // 自分のyスケールが0.6なら追加処理を実行
+        if (Mathf.Approximately(transform.localScale.y, 0.6f))
         {
             // kusaプレハブを自分の位置に生成
             if (kusaPrefab != null)
@@ -89,7 +89,7 @@ public class thisDestroy : MonoBehaviour
         {
             // プレハブを生成し、DynamicObjectsオブジェクトの子として設定
             GameObject catkusa = Instantiate(catkusaPrefab, transform.position, Quaternion.identity);
-            
+
             if (dynamicObjectsParent != null)
             {
                 catkusa.transform.SetParent(dynamicObjectsParent);  // DynamicObjectsオブジェクトの子に設定
@@ -105,7 +105,7 @@ public class thisDestroy : MonoBehaviour
         {
             // プレハブを生成し、DynamicObjectsオブジェクトの子として設定
             GameObject grassEffect = Instantiate(grassEffectPrefab, transform.position, Quaternion.identity);
-            
+
             if (dynamicObjectsParent != null)
             {
                 grassEffect.transform.SetParent(dynamicObjectsParent);  // DynamicObjectsオブジェクトの子に設定
@@ -123,6 +123,7 @@ public class thisDestroy : MonoBehaviour
         }
 
         // オブジェクトを破壊
-        Destroy(gameObject);
+        Destroy(this.gameObject);
+        
     }
 }

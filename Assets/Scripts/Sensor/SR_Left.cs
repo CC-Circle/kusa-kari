@@ -19,7 +19,7 @@ public class SR_Left : MonoBehaviour
         // SerialPort が開いていない場合のチェック
         if (!serialHandler.IsOpen)
         {
-            Debug.LogWarning("Serial port is not open.");
+            //Debug.LogWarning("Serial port is not open.");
         }
 
         // Mキーで振動フラグを切り替える
