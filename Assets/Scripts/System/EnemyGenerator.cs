@@ -6,7 +6,7 @@ public class EnemyGenerator : MonoBehaviour
     void Start()
     {
         int enemyType = GenerateEnemy();
-        Debug.Log("生成された敵タイプ: " + enemyType);
+        //Debug.Log("生成された敵タイプ: " + enemyType);
     }
 
     /// <summary>

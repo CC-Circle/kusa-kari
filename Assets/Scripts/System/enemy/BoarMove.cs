@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class BugMove : MonoBehaviour
+public class BoarMove : MonoBehaviour
 {
-    private float moveSpeed = 2.0f;   // 移動速度
-    private float startDistance = 20.0f; // 動き出す距離
+    private float moveSpeed = 10.5f;    // 移動速度
+    private float startDistance = 8.0f; // 動き出す距離（XZ平面上）
 
     private Transform mainCamera;
 
     void Start()
     {
-        // メインカメラを取得
+        // メインカメラ取得
         if (Camera.main != null)
         {
             mainCamera = Camera.main.transform;
@@ -24,15 +24,15 @@ public class BugMove : MonoBehaviour
     {
         if (mainCamera == null) return;
 
-        // Y軸を無視して距離を計算
-        Vector3 bugPos = transform.position;
+        // XZ平面での距離計算（Y軸無視）
+        Vector3 boarPos = transform.position;
         Vector3 camPos = mainCamera.position;
-        bugPos.y = 0f;
+        boarPos.y = 0f;
         camPos.y = 0f;
 
-        float distance = Vector3.Distance(bugPos, camPos);
+        float distance = Vector3.Distance(boarPos, camPos);
 
-        // 距離が一定以下なら移動
+        // 距離が一定以下なら前進
         if (distance <= startDistance)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);

@@ -19,7 +19,7 @@ const char *password = "nreja7brbdmw5";
 // const IPAddress targetIP(192, 168, 0, 140); // 受信側PCのIPアドレス
 const IPAddress targetIPs[] = {
     IPAddress(192, 168, 0, 140),
-    IPAddress(192, 168, 0, 26),
+    IPAddress(192, 168, 11, 6),
     IPAddress(192, 168, 0, 99),
 };
 
@@ -84,7 +84,7 @@ void loop()
 
     // 送信するメッセージをJSON形式で作成
     char message[128];
-    snprintf(message, sizeof(message), "{\"accel\":{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f}}", ax, ay, az);
+    snprintf(message, sizeof(message), "%.2f", ax);
 
     // 送信先のIPアドレスとポート番号にメッセージを送信
     sendUdpMessage(targetIPs[0], targetPort, message);
