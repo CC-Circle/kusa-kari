@@ -74,24 +74,24 @@ public class KusaGridGenerator : MonoBehaviour
                 if (enemyType != 0)
                 {
                     // 敵を同じ位置に生成
-                    switch (enemyType)
-                    {
-                        case 1:
-                            Instantiate(enemy1Prefab, position, Quaternion.identity);
-                            break;
-                        case 2:
-                            Instantiate(enemy2Prefab, position, Quaternion.identity);
-                            break;
-                        case 3:
-                            Instantiate(enemy3Prefab, position, Quaternion.identity);
-                            break;
-                    }
+                    // switch (enemyType)
+                    // {
+                    //     case 1:
+                    //         Instantiate(enemy1Prefab, position, Quaternion.identity);
+                    //         break;
+                    //     case 2:
+                    //         Instantiate(enemy2Prefab, position, Quaternion.identity);
+                    //         break;
+                    //     case 3:
+                    //         Instantiate(enemy3Prefab, position, Quaternion.identity);
+                    //         break;
+                    // }
 
                     // kusaHPを0に
-                    kusaHP[z, x] = 0;
+                    //kusaHP[z, x] = 0;
 
                     // オブジェクト名の末尾に "-1" を追加
-                    instance.name = baseName + "-1";
+                    //instance.name = baseName + "-1";
                 }
             }
         }
