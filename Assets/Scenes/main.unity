@@ -192,11 +192,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
---- !u!1 &38444914 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7943044365291616901, guid: f4a9b7c3aceb64fa0943772e690dff0e, type: 3}
-  m_PrefabInstance: {fileID: 1669974342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &52139747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -832,6 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMove: {fileID: 1419828614}
+  UDPFlag: 1
 --- !u!114 &254546587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,8 +1334,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 493492419}
-  - component: {fileID: 493492421}
   - component: {fileID: 493492420}
+  - component: {fileID: 493492421}
   m_Layer: 0
   m_Name: M5_L
   m_TagString: Untagged
@@ -1389,6 +1385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   udpHandler: {fileID: 493492420}
   imu: 0
+  L_message: 
 --- !u!1001 &515834766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2956,6 +2953,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1177293200886317293, guid: 072904e304177470ea05cb437b451921, type: 3}
   m_PrefabInstance: {fileID: 2089991578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &860976527 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
+  m_PrefabInstance: {fileID: 1493100965}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &871711628
 PrefabInstance:
@@ -6514,10 +6516,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7943044365291616901, guid: f4a9b7c3aceb64fa0943772e690dff0e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1669974344}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4a9b7c3aceb64fa0943772e690dff0e, type: 3}
 --- !u!4 &1669974343 stripped
 Transform:
@@ -6767,6 +6766,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
+--- !u!4 &1793797487 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
+  m_PrefabInstance: {fileID: 404565237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1804172191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6927,6 +6931,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
+--- !u!4 &1840949462 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
+  m_PrefabInstance: {fileID: 1477570167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847670349
 GameObject:
   m_ObjectHideFlags: 0
@@ -7093,6 +7102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   udpHandler: {fileID: 1864455589}
   imu: 0
+  C_message: 
 --- !u!114 &1864455589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7327,7 +7337,6 @@ Transform:
   m_Children:
   - {fileID: 253235138}
   - {fileID: 970328176}
-  - {fileID: 2142268357}
   - {fileID: 1381849273}
   - {fileID: 876313175}
   - {fileID: 2124707900}
@@ -7344,15 +7353,11 @@ Transform:
   - {fileID: 1914248923}
   - {fileID: 423300620}
   - {fileID: 2042670005}
-  - {fileID: 1178602463}
   - {fileID: 136002236}
-  - {fileID: 1705023706}
   - {fileID: 1898978172}
   - {fileID: 257384535}
-  - {fileID: 1164399431}
   - {fileID: 720478121}
   - {fileID: 85171780}
-  - {fileID: 483383827}
   - {fileID: 1741039424}
   - {fileID: 1366633428}
   - {fileID: 622192773}
@@ -7360,6 +7365,9 @@ Transform:
   - {fileID: 687808447}
   - {fileID: 2115666729}
   - {fileID: 2141189633}
+  - {fileID: 1840949462}
+  - {fileID: 1793797487}
+  - {fileID: 860976527}
   m_Father: {fileID: 785365996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1995061868
@@ -7497,6 +7505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   udpHandler: {fileID: 2031692114}
   imu: 0
+  R_message: 
 --- !u!114 &2031692114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8313,11 +8322,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
   m_PrefabInstance: {fileID: 2043930771}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2142268357 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 942aa81c7ed63416da4602090457f4c4, type: 3}
-  m_PrefabInstance: {fileID: 1875747611}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1466765698168811861
 PrefabInstance:

@@ -20,6 +20,7 @@ const char *password = "nreja7brbdmw5";
 const IPAddress targetIPs[] = {
     IPAddress(192, 168, 11, 3),
     IPAddress(192, 168, 11, 4),
+    IPAddress(192, 168, 11, 5),
     IPAddress(192, 168, 11, 6),
 };
 
@@ -99,8 +100,7 @@ void loop()
     snprintf(message, sizeof(message), "C:%d", flag);
 
     // 送信先のIPアドレスとポート番号にメッセージを送信
-    sendUdpMessage(targetIPs[0], targetPort, message);
-    for (int i = 0; i < 3; i++)
+    for (size_t i = 0; i < sizeof(targetIPs) / sizeof(targetIPs[0]); i++)
     {
       sendUdpMessage(targetIPs[i], targetPort, message);
       delay(100);

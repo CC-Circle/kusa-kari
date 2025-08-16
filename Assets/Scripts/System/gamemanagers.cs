@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     // KusaGridGeneratorの参照
     private KusaGridGenerator kusaGridGenerator;
     // UDP通信のフラッグ
-    private bool UDPFlag = false;
+    public bool UDPFlag = false;
 
     void Start()
     {
@@ -68,8 +68,26 @@ public class GameManager : MonoBehaviour
 
         if (UDPFlag == true)
         {
-            //太田メモ☑️
-            //中央草の処理が無くなったので、ここは完全に書き換え
+            UdpRC_C udpC = FindObjectOfType<UdpRC_C>();
+            UdpRC_L udpL = FindObjectOfType<UdpRC_L>();
+            UdpRC_R udpR = FindObjectOfType<UdpRC_R>();
+
+            if (udpL.L_message.Contains("1")) ReceiveSignal(0); // 左端（x=0）
+            if (udpC.C_message.Contains("1")) ReceiveSignal(1); // 中央（x=1）
+            if (udpR.R_message.Contains("1")) ReceiveSignal(2); // 右端（x=2）
+
+
+            // 全ての草が刈られたら次の列へ
+            if (IsZColumnAllZero())
+            {
+                cameraMove?.MoveForward();
+
+                if (currentZIndex < kusaGrid.GetLength(0) - 1)
+                {
+                    currentZIndex++;
+                    InitializeZColumn(currentZIndex);
+                }
+            }
         }
         else
         {
@@ -78,7 +96,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(1); // 中央（x=1）
             if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(0); // 左端（x=0）
 
-            
+
 
             // 全ての草が刈られたら次の列へ
             if (IsZColumnAllZero())
