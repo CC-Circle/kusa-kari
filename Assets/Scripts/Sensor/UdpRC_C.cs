@@ -4,10 +4,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-public class UdpReceiver : MonoBehaviour
+public class UdpRC_C : MonoBehaviour
 {
     
-    public  UdpHandler udpHandler; // UdpHandlerのインスタンス
+    public  UdpHD_C udpHandler; // UdpHandlerのインスタンス
     public int imu;
 
     void Start()
