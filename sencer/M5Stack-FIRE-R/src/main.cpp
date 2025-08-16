@@ -18,13 +18,15 @@ const char *password = "nreja7brbdmw5";
 // 送信先のIPアドレスとポート番号
 // const IPAddress targetIP(192, 168, 0, 140); // 受信側PCのIPアドレス
 const IPAddress targetIPs[] = {
-    IPAddress(192, 168, 0, 140),
+    IPAddress(192, 168, 11, 3),
+    IPAddress(192, 168, 11, 4),
     IPAddress(192, 168, 11, 6),
-    IPAddress(192, 168, 0, 99),
 };
 
-const int targetPort = 12345;
+const int targetPort = 12347;
 // ------------------------------------
+
+int flag = 0;
 
 void setup()
 {
@@ -38,6 +40,7 @@ void setup()
   Serial.begin(115200);
 
   // --- Wi-Fi接続処理 ---
+  M5.Lcd.setTextSize(2);
   M5.Lcd.println("Connecting to WiFi...");
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -66,14 +69,16 @@ void loop()
 
   if (WiFi.status() != WL_CONNECTED)
   {
-    // 【修正】Wi-Fiが切断された場合、LEDマトリックスを紫色にしてエラー表示
+    // Wi-Fiが切断された場合、LEDマトリックスを紫色にしてエラー表示
     M5.Display.fillScreen(dispColor(128, 0, 128));
     Serial.println("WiFi not connected");
   }
   else
   {
-    // 【修正】Wi-Fiが接続されている場合、LEDマトリックスを緑色に点灯
+    // Wi-Fiが接続されている場合、LEDマトリックスを緑色に点灯
     M5.Display.fillScreen(dispColor(0, 128, 0));
+    M5.Lcd.setCursor(10, 10);
+    M5.Lcd.printf("M5_R");
 
     // IMUから加速度データを取得
     float ax, ay, az;
@@ -82,18 +87,25 @@ void loop()
     // 加速度データをシリアルモニターに表示
     Serial.printf("Accel: X=%.2f, Y=%.2f, Z=%.2f (g)\n", ax, ay, az);
 
-    // 送信するメッセージをJSON形式で作成
-    char message[128];
-    snprintf(message, sizeof(message), "%.2f", ax);
+    // 揺れているかの判定
+    if (ax > 0.1 || ax < -0.1) {
+      flag = 1;
+    } else {
+      flag = 0;
+    }
+
+    // 送信するメッセージをフラッグに変更
+    char message[32];
+    snprintf(message, sizeof(message), "R:%d", flag);
 
     // 送信先のIPアドレスとポート番号にメッセージを送信
     sendUdpMessage(targetIPs[0], targetPort, message);
     for (int i = 0; i < 3; i++)
     {
       sendUdpMessage(targetIPs[i], targetPort, message);
-      delay(500);
+      delay(100);
     }
   }
 
-  delay(500); // 0.5秒ごとに送信
+  delay(100); // 0.5秒ごとに送信
 }

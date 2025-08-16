@@ -6,20 +6,20 @@ using System.Text;
 using System.Threading;
 using System.Collections.Concurrent;
 
-public class UdpHandler : MonoBehaviour
+public class UdpHD_R : MonoBehaviour
 {
     // デリゲート型を宣言し、データ受信イベントを定義します
     public delegate void UdpDataReceivedEventHandler(string message);
     public event UdpDataReceivedEventHandler OnDataReceived;
 
     [Tooltip("受信待ちするポート番号")]
-    public int listenPort = 12345;
+    public int listenPort = 12346;
 
     private Thread receiveThread;
     private UdpClient client;
     private bool isRunning = false;
     private readonly ConcurrentQueue<string> receivedMessages = new ConcurrentQueue<string>();
-    public static UdpHandler instance;
+    public static UdpHD_R instance;
 
     private void Awake()
     {

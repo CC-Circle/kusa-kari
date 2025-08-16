@@ -17,23 +17,8 @@ public class GameManager : MonoBehaviour
     private int currentZIndex = 0;
     // KusaGridGeneratorの参照
     private KusaGridGenerator kusaGridGenerator;
-    // 移動待機状態のフラグ（現在未使用）
-    //private bool isWaitingForMove = false;
-
-    // センサー関連
-    // シリアル通信が利用可能かのフラグ
-    private bool isSerialAvailable = false;
-    // SR_Leftをアタッチ
-    public SR_Left SR_Left;
-    // SR_Rightをアタッチ
-    public SR_Right SR_Right;
-    // SH_Leftをアタッチ
-    public SH_Left SH_Left;
-    // SH_Rightをアタッチ
-    public SH_Right SH_Right;
-    // 左右が刈られた状態を記録するフラグ
-    //private bool leftCut = false;
-    //private bool rightCut = false;
+    // UDP通信のフラッグ
+    private bool UDPFlag = false;
 
     void Start()
     {
@@ -71,16 +56,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("CameraMove script not found on the Main Camera.");
         }
-
-        // シリアル通信が利用可能かのフラグを設定
-        if (SH_Left.IsOpen && SH_Right.IsOpen)
-        {
-            isSerialAvailable = true;
-        }
-        else
-        {
-            Debug.LogWarning("Serial communication is not set up. Using keyboard input as fallback.");
-        }
     }
 
     void Update()
@@ -91,7 +66,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (isSerialAvailable)
+        if (UDPFlag == true)
         {
             //太田メモ☑️
             //中央草の処理が無くなったので、ここは完全に書き換え
