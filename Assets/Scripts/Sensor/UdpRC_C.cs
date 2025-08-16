@@ -9,6 +9,7 @@ public class UdpRC_C : MonoBehaviour
     
     public  UdpHD_C udpHandler; // UdpHandlerのインスタンス
     public int imu;
+    public string C_message;
 
     void Start()
     {
@@ -25,8 +26,12 @@ public class UdpRC_C : MonoBehaviour
 
     void OnDataReceived(string message)
     {
+        // int型に変換してimuに格納
         int.TryParse(message, out int value);
         imu = value;
+
+        // 受信したメッセージを格納
+        C_message = message;
 
         Debug.Log($"IMU Received: {message}");
     }
