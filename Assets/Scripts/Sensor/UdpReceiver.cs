@@ -8,7 +8,7 @@ public class UdpReceiver : MonoBehaviour
 {
     
     public  UdpHandler udpHandler; // UdpHandlerのインスタンス
-    public int imu;
+    public float imu;
 
     void Start()
     {
@@ -25,8 +25,8 @@ public class UdpReceiver : MonoBehaviour
 
     void OnDataReceived(string message)
     {
-        message = message.Trim();  // 改行などを除去
-        imu = int.Parse(message);
+        float.TryParse(message, out float value);
+        imu = value;
 
         Debug.Log($"IMU Received: {message}");
     }

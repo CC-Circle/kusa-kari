@@ -103,6 +103,8 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2)) ReceiveSignal(1); // 中央（x=1）
             if (Input.GetKeyDown(KeyCode.Alpha1)) ReceiveSignal(0); // 左端（x=0）
 
+            
+
             // 全ての草が刈られたら次の列へ
             if (IsZColumnAllZero())
             {
