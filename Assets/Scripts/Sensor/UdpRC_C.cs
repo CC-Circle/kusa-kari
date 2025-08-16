@@ -25,7 +25,7 @@ public class UdpRC_C : MonoBehaviour
 
     void OnDataReceived(string message)
     {
-        float.TryParse(message, out float value);
+        int.TryParse(message, out int value);
         imu = value;
 
         Debug.Log($"IMU Received: {message}");
