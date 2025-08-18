@@ -13,7 +13,7 @@ public class ScoreProcessor : MonoBehaviour
     void Start()
     {
         // CSVファイルを読み込み、最後の行を取得
-        string path = "Assets/scores.csv";  // CSVファイルのパス
+        string path = Path.Combine(Application.dataPath, "Scores.csv"); // CSVファイルのパス
         string lastLine = GetLastLineOfCSV(path);
         
         if (!string.IsNullOrEmpty(lastLine))
