@@ -18,10 +18,15 @@ const char *password = "nreja7brbdmw5";
 // 送信先のIPアドレスとポート番号
 // const IPAddress targetIP(192, 168, 0, 140); // 受信側PCのIPアドレス
 const IPAddress targetIPs[] = {
+    IPAddress(192, 168, 11, 1),
+    IPAddress(192, 168, 11, 2),
     IPAddress(192, 168, 11, 3),
     IPAddress(192, 168, 11, 4),
     IPAddress(192, 168, 11, 5),
     IPAddress(192, 168, 11, 6),
+    IPAddress(192, 168, 11, 7),
+    IPAddress(192, 168, 11, 8),
+    IPAddress(192, 168, 11, 9)
 };
 
 const int targetPort = 12346;
@@ -78,6 +83,7 @@ void loop()
   {
     // Wi-Fiが接続されている場合、LEDマトリックスを緑色に点灯
     M5.Display.fillScreen(dispColor(0, 128, 0));
+    M5.Lcd.setTextSize(4);
     M5.Lcd.setCursor(10, 10);
     M5.Lcd.printf("M5_C");
 
@@ -89,8 +95,9 @@ void loop()
     Serial.printf("Accel: X=%.2f, Y=%.2f, Z=%.2f (g)\n", ax, ay, az);
 
     // 揺れているかの判定
-    if (ax > 0.1 || ax < -0.1) {
+    if (ax > 0.05 || ax < -0.05 || ay > 0.05 || ay < -0.05) {
       flag = 1;
+      M5.Display.fillScreen(dispColor(128, 0, 0));
     } else {
       flag = 0;
     }
