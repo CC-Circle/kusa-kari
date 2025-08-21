@@ -95,7 +95,7 @@ void loop()
     Serial.printf("Accel: X=%.2f, Y=%.2f, Z=%.2f (g)\n", ax, ay, az);
 
     // 揺れているかの判定
-    if (ax > 0.05 || ax < -0.05 || ay > 0.05 || ay < -0.05) {
+    if (ax > 0.1 || ax < -0.1) {
       flag = 1;
       M5.Display.fillScreen(dispColor(128, 0, 0));
     } else {
