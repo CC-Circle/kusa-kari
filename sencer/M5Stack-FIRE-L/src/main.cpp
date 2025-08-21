@@ -29,7 +29,7 @@ const IPAddress targetIPs[] = {
     IPAddress(192, 168, 11, 9)
 };
 
-const int targetPort = 12347;
+const int targetPort = 32143;
 // ------------------------------------
 
 int flag = 0;
@@ -85,7 +85,7 @@ void loop()
     M5.Display.fillScreen(dispColor(0, 128, 0));
     M5.Lcd.setTextSize(4);
     M5.Lcd.setCursor(10, 10);
-    M5.Lcd.printf("M5_L");
+    M5.Lcd.printf("M5_L_2");
 
     // IMUから加速度データを取得
     float ax, ay, az;
