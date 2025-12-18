@@ -46,7 +46,7 @@ public class RankingManager : MonoBehaviour
         scores = scores.OrderByDescending(score => score).Take(10).ToList();
 
         // 上位10個のスコアを表示
-        string leftRanking = "Rankings\n";
+        string leftRanking = "ランキング\n";
         string rightRanking = "\n";
 
         for (int i = 0; i < scores.Count; i++)
