@@ -46,6 +46,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.asset
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -74,3 +75,5 @@ crashlytics-build.properties
 # fonts file
 46325 SDF.asset
 46325 SDF.asset.meta
+YDWcaramelhop SDF.asset
+YDWcaramelhop SDF.asset.meta
