@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Object z{currentZIndex}x{signal} not found.");
+                // Debug.Log($"Object z{currentZIndex}x{signal} not found.");
             }
 
             if (HPColumn[signal] > 0)//草が存在する時

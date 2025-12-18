@@ -26,9 +26,9 @@ public class CameraMove : MonoBehaviour
         isMoving = true;
 
         Vector3 startPosition = transform.position;
-        Debug.Log("現在座標： "+startPosition);
+        // Debug.Log("現在座標： "+startPosition);
         Vector3 targetPosition = startPosition + new Vector3(0, 0, moveDistance);
-        Debug.Log("次点座標： "+targetPosition);
+        // Debug.Log("次点座標： "+targetPosition);
         float duration = 1f / moveSpeed;
         float elapsedTime = 0f;
 
