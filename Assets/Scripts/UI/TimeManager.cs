@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI timerText; // 残り時間を表示するTextMeshProUGUI
-    private float totalTime = 10.0f; // 60秒のタイマー
+    private float totalTime = 30.0f; // 60秒のタイマー
     private string formattedTime;
 
     [SerializeField]

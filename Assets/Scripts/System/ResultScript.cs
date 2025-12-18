@@ -71,7 +71,7 @@ public class ScoreProcessor : MonoBehaviour
         // テキストUIに出力（scoreTextが設定されていれば）
         if (scoreText != null)
         {
-            scoreText.text = "スコア:" + score.ToString();
+            scoreText.text = "スコア " + score.ToString()+ "g";
         }
         else
         {
