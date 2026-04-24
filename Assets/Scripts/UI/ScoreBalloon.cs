@@ -24,7 +24,7 @@ public class ScoreBalloon : MonoBehaviour
     {
         balloonObject.SetActive(false);
 
-        Debug.Log($"[ScoreBalloon] scoreManager null? {scoreManager == null}");
+        // Debug.Log($"[ScoreBalloon] scoreManager null? {scoreManager == null}");
     }
 
     private void Update()

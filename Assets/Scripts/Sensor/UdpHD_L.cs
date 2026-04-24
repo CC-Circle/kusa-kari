@@ -13,7 +13,7 @@ public class UdpHD_L : MonoBehaviour
     public event UdpDataReceivedEventHandler OnDataReceived;
 
     [Tooltip("受信待ちするポート番号")]
-    public int listenPort = 12347;
+    public int listenPort = 32143;
 
     private Thread receiveThread;
     private UdpClient client;

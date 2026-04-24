@@ -11,28 +11,46 @@ public class UdpRC_R : MonoBehaviour
     public int imu;
     public string R_message;
 
-    void Start()
+    public float lastReceiveTime = -1f;
+    public bool isReceiving = false;
+
+    void Awake()
     {
         udpHandler.OnDataReceived += OnDataReceived; // データ受信イベントにハンドラを登録
     }
 
     void Update()
     {
-        if (!udpHandler.IsOpen)
+        if (lastReceiveTime < 0)
         {
-            Debug.LogWarning("UDP port is not open.");
+            Debug.Log("UDP: まだ一度も受信していない");
+            return;
+        }
+
+        float elapsed = Time.time - lastReceiveTime;
+
+        if (elapsed < 0.5f)
+        {
+            Debug.Log($"UDP: 受信中（{elapsed:F2}s前）");
+        }
+        else
+        {
+            isReceiving = false;
+            Debug.LogWarning($"UDP: 途切れた（最後 {elapsed:F2}s 前）");
         }
     }
 
+
     void OnDataReceived(string message)
     {
-        // int型に変換してimuに格納
+        lastReceiveTime = Time.time;
+        isReceiving = true;
+
         int.TryParse(message, out int value);
         imu = value;
-
-        // 受信したメッセージを格納
         R_message = message;
 
         Debug.Log($"IMU Received: {message}");
     }
+
 }
